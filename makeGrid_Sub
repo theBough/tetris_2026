@@ -1,6 +1,14 @@
-Public Sub makeGrid()
-    grid.Location = New Point(10, 10)
-    grid.Width = 20
-    grid.Text = "Cobrin"
-    Me.Controls.Add(grid)
-End Sub
+ Public Sub makeGrid()
+     For i = 0 To 10
+         grid(i) = New Label()
+         With grid(i)
+             .Location = New Point(i * 60, 50)
+             .Width = 50
+             .Height = 50
+             .BackColor = Color.Black
+         End With
+         Me.Controls.Add(grid(i))
+     Next i
+
+
+ End Sub
