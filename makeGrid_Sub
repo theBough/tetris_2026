@@ -1,0 +1,6 @@
+Public Sub makeGrid()
+    grid.Location = New Point(10, 10)
+    grid.Width = 20
+    grid.Text = "Cobrin"
+    Me.Controls.Add(grid)
+End Sub
