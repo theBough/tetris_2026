@@ -1,0 +1,6 @@
+Sub makeEl(anchorX As Integer, anchorY As Integer)
+    grid(anchorX, anchorY).BackColor = Color.Orange
+    grid(anchorX, anchorY + 1).BackColor = Color.Orange
+    grid(anchorX, anchorY + 2).BackColor = Color.Orange
+    grid(anchorX + 1, anchorY + 2).BackColor = Color.Orange
+End Sub
