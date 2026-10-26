@@ -1,8 +1,6 @@
-Sub makeCube()
+Sub makeCube(anchorX As Integer, anchorY As Integer)
     'This will make the cube at the top middle
-    'The cube is going to be pink.
-    Dim anchorX As Integer = 10
-    Dim anchorY As Integer = 10
+    'The cube is going to be pink
     grid(anchorX, anchorY).BackColor = Color.Pink
     grid(anchorX + 1, anchorY).BackColor = Color.Pink
     grid(anchorX, anchorY + 1).BackColor = Color.Pink
