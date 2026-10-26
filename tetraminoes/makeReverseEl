@@ -1,0 +1,6 @@
+Sub makeReverseEl(anchorX As Integer, anchorY As Integer)
+    grid(anchorX, anchorY).BackColor = Color.Red
+    grid(anchorX, anchorY + 1).BackColor = Color.Red
+    grid(anchorX, anchorY + 2).BackColor = Color.Red
+    grid(anchorX - 1, anchorY + 2).BackColor = Color.Red
+End Sub
