@@ -1,8 +1,6 @@
- Sub makeEs()
+ Sub makeEs(anchorX As Integer, anchorY As Integer)
      'This will make the 's' shaped tetra
      'The 's' is going to be Green
-     Dim anchorX As Integer = 10
-     Dim anchorY As Integer = 10
      grid(anchorX, anchorY).BackColor = Color.Green
      grid(anchorX + 1, anchorY).BackColor = Color.Green
      grid(anchorX - 1, anchorY + 1).BackColor = Color.Green
