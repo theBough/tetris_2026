@@ -1,0 +1,6 @@
+Sub makeTee(anchorX As Integer, anchorY As Integer)
+    grid(anchorX, anchorY).BackColor = Color.White
+    grid(anchorX - 1, anchorY + 1).BackColor = Color.White
+    grid(anchorX, anchorY + 1).BackColor = Color.White
+    grid(anchorX + 1, anchorY + 1).BackColor = Color.White
+End Sub
