@@ -1,6 +1,6 @@
 #Region "Variables"
-    Const MaxColumn As Integer = 20
-    Const MaxRow As Integer = 20
+    Const MaxColumn As Integer = 19
+    Const MaxRow As Integer = 19
     Dim grid(MaxColumn, MaxRow) As Label
     Dim topGrid(5, 5) As Label
     Dim midGrid(5, 5) As Label
