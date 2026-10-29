@@ -1,14 +1,42 @@
- Public Sub makeGrid()
-     For i = 0 To 10
-         grid(i) = New Label()
-         With grid(i)
-             .Location = New Point(i * 60, 50)
-             .Width = 50
-             .Height = 50
-             .BackColor = Color.Black
-         End With
-         Me.Controls.Add(grid(i))
+ Public Sub makeMidGrid()
+     For i = 0 To 5
+         For j = 0 To 5
+             midGrid(i, j) = New Label()
+             With midGrid(i, j)
+                 .Location = New Point(i * 32 + 712, j * 32 + 200 + (32 * 5))
+                 .Width = 30
+                 .Height = 30
+                 .BackColor = Color.Black
+             End With
+             Me.Controls.Add(midGrid(i, j))
+         Next j
      Next i
-
-
+ End Sub
+ Public Sub makeGrid()
+     For i = 0 To MaxColumn
+         For j = 0 To MaxRow
+             grid(i, j) = New Label()
+             With grid(i, j)
+                 .Location = New Point(i * 32 + 20, j * 32 + 100)
+                 .Width = 30
+                 .Height = 30
+                 .BackColor = Color.Black
+             End With
+             Me.Controls.Add(grid(i, j))
+         Next j
+     Next i
+ End Sub
+ Public Sub makeTopGrid()
+     For i = 0 To 5
+         For j = 0 To 5
+             topGrid(i, j) = New Label()
+             With topGrid(i, j)
+                 .Location = New Point(i * 32 + 712, j * 32 + 100)
+                 .Width = 30
+                 .Height = 30
+                 .BackColor = Color.Black
+             End With
+             Me.Controls.Add(topGrid(i, j))
+         Next j
+     Next i
  End Sub
