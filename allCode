@@ -1,0 +1,106 @@
+Imports Accessibility
+
+Public Class Form1
+#Region "Variables"
+    Const MaxColumn As Integer = 19
+    Const MaxRow As Integer = 19
+    Dim grid(MaxColumn, MaxRow) As Label
+    Dim topGrid(5, 5) As Label
+    Dim midGrid(5, 5) As Label
+    Dim bottomGrid(5, 5) As Label
+#End Region
+
+#Region "Tetraminos"
+    Sub makeTee(anchorX As Integer, anchorY As Integer)
+        topGrid(anchorX, anchorY).BackColor = Color.White
+        topGrid(anchorX - 1, anchorY + 1).BackColor = Color.White
+        topGrid(anchorX, anchorY + 1).BackColor = Color.White
+        topGrid(anchorX + 1, anchorY + 1).BackColor = Color.White
+    End Sub
+    Sub makeReverseEl(anchorX As Integer, anchorY As Integer)
+        midGrid(anchorX, anchorY).BackColor = Color.Red
+        midGrid(anchorX, anchorY + 1).BackColor = Color.Red
+        midGrid(anchorX, anchorY + 2).BackColor = Color.Red
+        midGrid(anchorX - 1, anchorY + 2).BackColor = Color.Red
+    End Sub
+    Sub makeEl(anchorX As Integer, anchorY As Integer)
+        grid(anchorX, anchorY).BackColor = Color.Orange
+        grid(anchorX, anchorY + 1).BackColor = Color.Orange
+        grid(anchorX, anchorY + 2).BackColor = Color.Orange
+        grid(anchorX + 1, anchorY + 2).BackColor = Color.Orange
+    End Sub
+    Sub makeEs(anchorX As Integer, anchorY As Integer)
+        'This will make the 's' shaped tetra
+        'The 's' is going to be Green
+        grid(anchorX, anchorY).BackColor = Color.Green
+        grid(anchorX + 1, anchorY).BackColor = Color.Green
+        grid(anchorX - 1, anchorY + 1).BackColor = Color.Green
+        grid(anchorX, anchorY + 1).BackColor = Color.Green
+    End Sub
+    Sub makeCube(anchorX As Integer, anchorY As Integer)
+        'This will make the cube at the top middle
+        'The cube is going to be pink
+        grid(anchorX, anchorY).BackColor = Color.Pink
+        grid(anchorX + 1, anchorY).BackColor = Color.Pink
+        grid(anchorX, anchorY + 1).BackColor = Color.Pink
+        grid(anchorX + 1, anchorY + 1).BackColor = Color.Pink
+
+    End Sub
+
+#End Region
+#Region "Grids"
+    Public Sub makeMidGrid()
+        For i = 0 To 5
+            For j = 0 To 5
+                midGrid(i, j) = New Label()
+                With midGrid(i, j)
+                    .Location = New Point(i * 32 + 712, j * 32 + 200 + (32 * 5))
+                    .Width = 30
+                    .Height = 30
+                    .BackColor = Color.Black
+                End With
+                Me.Controls.Add(midGrid(i, j))
+            Next j
+        Next i
+    End Sub
+    Public Sub makeGrid()
+        For i = 0 To MaxColumn
+            For j = 0 To MaxRow
+                grid(i, j) = New Label()
+                With grid(i, j)
+                    .Location = New Point(i * 32 + 20, j * 32 + 100)
+                    .Width = 30
+                    .Height = 30
+                    .BackColor = Color.Black
+                End With
+                Me.Controls.Add(grid(i, j))
+            Next j
+        Next i
+    End Sub
+    Public Sub makeTopGrid()
+        For i = 0 To 5
+            For j = 0 To 5
+                topGrid(i, j) = New Label()
+                With topGrid(i, j)
+                    .Location = New Point(i * 32 + 712, j * 32 + 100)
+                    .Width = 30
+                    .Height = 30
+                    .BackColor = Color.Black
+                End With
+                Me.Controls.Add(topGrid(i, j))
+            Next j
+        Next i
+    End Sub
+#End Region
+
+    Private Sub Form1_Load(sender As Object, e As EventArgs) Handles MyBase.Load
+        makeGrid()
+        makeTopGrid()
+        makeMidGrid()
+        makeEs(3, 0)
+        makeEl(6, 0)
+        makeCube(0, 0)
+        makeReverseEl(2, 2)
+        makeTee(2, 2)
+    End Sub
+End Class
