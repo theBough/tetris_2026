@@ -1,0 +1,38 @@
+#Region "Tetraminos"
+    Sub makeTee(anchorX As Integer, anchorY As Integer)
+        topGrid(anchorX, anchorY).BackColor = Color.White
+        topGrid(anchorX - 1, anchorY + 1).BackColor = Color.White
+        topGrid(anchorX, anchorY + 1).BackColor = Color.White
+        topGrid(anchorX + 1, anchorY + 1).BackColor = Color.White
+    End Sub
+    Sub makeReverseEl(anchorX As Integer, anchorY As Integer)
+        midGrid(anchorX, anchorY).BackColor = Color.Red
+        midGrid(anchorX, anchorY + 1).BackColor = Color.Red
+        midGrid(anchorX, anchorY + 2).BackColor = Color.Red
+        midGrid(anchorX - 1, anchorY + 2).BackColor = Color.Red
+    End Sub
+    Sub makeEl(anchorX As Integer, anchorY As Integer)
+        grid(anchorX, anchorY).BackColor = Color.Orange
+        grid(anchorX, anchorY + 1).BackColor = Color.Orange
+        grid(anchorX, anchorY + 2).BackColor = Color.Orange
+        grid(anchorX + 1, anchorY + 2).BackColor = Color.Orange
+    End Sub
+    Sub makeEs(anchorX As Integer, anchorY As Integer)
+        'This will make the 's' shaped tetra
+        'The 's' is going to be Green
+        grid(anchorX, anchorY).BackColor = Color.Green
+        grid(anchorX + 1, anchorY).BackColor = Color.Green
+        grid(anchorX - 1, anchorY + 1).BackColor = Color.Green
+        grid(anchorX, anchorY + 1).BackColor = Color.Green
+    End Sub
+    Sub makeCube(anchorX As Integer, anchorY As Integer)
+        'This will make the cube at the top middle
+        'The cube is going to be pink
+        grid(anchorX, anchorY).BackColor = Color.Pink
+        grid(anchorX + 1, anchorY).BackColor = Color.Pink
+        grid(anchorX, anchorY + 1).BackColor = Color.Pink
+        grid(anchorX + 1, anchorY + 1).BackColor = Color.Pink
+
+    End Sub
+
+#End Region
