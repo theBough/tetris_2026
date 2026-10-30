@@ -84,7 +84,16 @@ Public Class Form1
             Next j
         Next i
     End Sub
+
+    Private Sub labelsClickEvent(sender As Object, e As EventArgs)
+        Me.Text = sender.tag
+
+    End Sub
+
+
+
     Public Sub makeGrid()
+
         For i = 0 To MaxColumn
             For j = 0 To MaxRow
                 grid(i, j) = New Label()
@@ -93,8 +102,10 @@ Public Class Form1
                     .Width = 30
                     .Height = 30
                     .BackColor = Color.Black
+                    .Tag = i & "," & j
                 End With
                 Me.Controls.Add(grid(i, j))
+                AddHandler grid(i, j).Click, AddressOf labelsClickEvent
             Next j
         Next i
     End Sub
