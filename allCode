@@ -10,6 +10,27 @@ Public Class Form1
     Dim bottomGrid(5, 5) As Label
 #End Region
 
+#Region "Game Play"
+    Sub pickRandomTetro()
+        Dim rando As New Random
+
+        Select Case rando.Next(1, 6)
+            Case 1
+                'if the random was 1, then we are making 
+                'a "tee" in the top Grid
+                makeTee(2, 2)
+            Case 2
+                makeReverseEl(2, 2)
+            Case 3
+                makeEl(2, 2)
+            Case 4
+                makeEs(2, 2)
+            Case 5
+                makeCube(2, 2)
+        End Select
+    End Sub
+#End Region
+
 #Region "Tetraminos"
     Sub makeTee(anchorX As Integer, anchorY As Integer)
         topGrid(anchorX, anchorY).BackColor = Color.White
@@ -18,32 +39,32 @@ Public Class Form1
         topGrid(anchorX + 1, anchorY + 1).BackColor = Color.White
     End Sub
     Sub makeReverseEl(anchorX As Integer, anchorY As Integer)
-        midGrid(anchorX, anchorY).BackColor = Color.Red
-        midGrid(anchorX, anchorY + 1).BackColor = Color.Red
-        midGrid(anchorX, anchorY + 2).BackColor = Color.Red
-        midGrid(anchorX - 1, anchorY + 2).BackColor = Color.Red
+        topGrid(anchorX, anchorY).BackColor = Color.Red
+        topGrid(anchorX, anchorY + 1).BackColor = Color.Red
+        topGrid(anchorX, anchorY + 2).BackColor = Color.Red
+        topGrid(anchorX - 1, anchorY + 2).BackColor = Color.Red
     End Sub
     Sub makeEl(anchorX As Integer, anchorY As Integer)
-        grid(anchorX, anchorY).BackColor = Color.Orange
-        grid(anchorX, anchorY + 1).BackColor = Color.Orange
-        grid(anchorX, anchorY + 2).BackColor = Color.Orange
-        grid(anchorX + 1, anchorY + 2).BackColor = Color.Orange
+        topGrid(anchorX, anchorY).BackColor = Color.Orange
+        topGrid(anchorX, anchorY + 1).BackColor = Color.Orange
+        topGrid(anchorX, anchorY + 2).BackColor = Color.Orange
+        topGrid(anchorX + 1, anchorY + 2).BackColor = Color.Orange
     End Sub
     Sub makeEs(anchorX As Integer, anchorY As Integer)
         'This will make the 's' shaped tetra
         'The 's' is going to be Green
-        grid(anchorX, anchorY).BackColor = Color.Green
-        grid(anchorX + 1, anchorY).BackColor = Color.Green
-        grid(anchorX - 1, anchorY + 1).BackColor = Color.Green
-        grid(anchorX, anchorY + 1).BackColor = Color.Green
+        topGrid(anchorX, anchorY).BackColor = Color.Green
+        topGrid(anchorX + 1, anchorY).BackColor = Color.Green
+        topGrid(anchorX - 1, anchorY + 1).BackColor = Color.Green
+        topGrid(anchorX, anchorY + 1).BackColor = Color.Green
     End Sub
     Sub makeCube(anchorX As Integer, anchorY As Integer)
         'This will make the cube at the top middle
         'The cube is going to be pink
-        grid(anchorX, anchorY).BackColor = Color.Pink
-        grid(anchorX + 1, anchorY).BackColor = Color.Pink
-        grid(anchorX, anchorY + 1).BackColor = Color.Pink
-        grid(anchorX + 1, anchorY + 1).BackColor = Color.Pink
+        topGrid(anchorX, anchorY).BackColor = Color.Pink
+        topGrid(anchorX + 1, anchorY).BackColor = Color.Pink
+        topGrid(anchorX, anchorY + 1).BackColor = Color.Pink
+        topGrid(anchorX + 1, anchorY + 1).BackColor = Color.Pink
 
     End Sub
 
@@ -97,10 +118,7 @@ Public Class Form1
         makeGrid()
         makeTopGrid()
         makeMidGrid()
-        makeEs(3, 0)
-        makeEl(6, 0)
-        makeCube(0, 0)
-        makeReverseEl(2, 2)
-        makeTee(2, 2)
+        pickRandomTetro()
+
     End Sub
 End Class
