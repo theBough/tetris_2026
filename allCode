@@ -11,16 +11,142 @@ Public Class Form1
 #End Region
 
 #Region "Game Play"
-    Sub pickRandomTetro()
-        Dim rando As New Random
 
-        Select Case rando.Next(1, 2)
-            Case 1
-                'if the random was 1, then we are making 
-                'a "tee" in the top Grid
-                makeTee(2, 2, midGrid)
-            Case 2
-                makeReverseEl(2, 2)
+
+    Public Class Form1
+#Region "Variables"
+        Const MaxColumn As Integer = 19
+        Const MaxRow As Integer = 19
+        Dim grid(MaxColumn, MaxRow) As Label
+        Dim topGrid(5, 5) As Label
+        Dim midGrid(5, 5) As Label
+        Dim bottomGrid(5, 5) As Label
+#End Region
+
+#Region "Game Play"
+        Sub pickRandomTetro(ByVal thisGrid As Label(,))
+            Dim rando As New Random
+
+            Select Case rando.Next(1, 2)
+                Case 1
+                    'if the random was 1, then we are making 
+                    'a "tee" in the top Grid
+                    makeTee(2, 2, midGrid)
+                Case 2
+                    makeReverseEl(2, 2, thisGrid)
+                Case 3
+                    makeEl(2, 2, thisGrid)
+                Case 4
+                    makeEs(2, 2, thisGrid)
+                Case 5
+                    makeCube(2, 2, thisGrid)
+            End Select
+        End Sub
+#End Region
+
+#Region "Tetraminos"
+        Sub makeTee(anchorX As Integer, anchorY As Integer, ByVal thisGrid As Label(,))
+            thisGrid(anchorX, anchorY).BackColor = Color.White
+            thisGrid(anchorX - 1, anchorY + 1).BackColor = Color.White
+            thisGrid(anchorX, anchorY + 1).BackColor = Color.White
+            thisGrid(anchorX + 1, anchorY + 1).BackColor = Color.White
+        End Sub
+        Sub makeReverseEl(anchorX As Integer, anchorY As Integer, ByVal thisGrid As Label(,))
+            thisGrid(anchorX, anchorY).BackColor = Color.Red
+            thisGrid(anchorX, anchorY + 1).BackColor = Color.Red
+            thisGrid(anchorX, anchorY + 2).BackColor = Color.Red
+            thisGrid(anchorX - 1, anchorY + 2).BackColor = Color.Red
+        End Sub
+        Sub makeEl(anchorX As Integer, anchorY As Integer, ByVal thisGrid As Label(,))
+            thisGrid(anchorX, anchorY).BackColor = Color.Orange
+            thisGrid(anchorX, anchorY + 1).BackColor = Color.Orange
+            thisGrid(anchorX, anchorY + 2).BackColor = Color.Orange
+            thisGrid(anchorX + 1, anchorY + 2).BackColor = Color.Orange
+        End Sub
+        Sub makeEs(anchorX As Integer, anchorY As Integer, ByVal thisGrid As Label(,))
+            'This will make the 's' shaped tetra
+            'The 's' is going to be Green
+            thisGrid(anchorX, anchorY).BackColor = Color.Green
+            thisGrid(anchorX + 1, anchorY).BackColor = Color.Green
+            thisGrid(anchorX - 1, anchorY + 1).BackColor = Color.Green
+            thisGrid(anchorX, anchorY + 1).BackColor = Color.Green
+        End Sub
+        Sub makeCube(anchorX As Integer, anchorY As Integer, ByVal thisGrid As Label(,))
+            'This will make the cube at the top middle
+            'The cube is going to be pink
+            thisGrid(anchorX, anchorY).BackColor = Color.Pink
+            thisGrid(anchorX + 1, anchorY).BackColor = Color.Pink
+            thisGrid(anchorX, anchorY + 1).BackColor = Color.Pink
+            thisGrid(anchorX + 1, anchorY + 1).BackColor = Color.Pink
+
+        End Sub
+
+#End Region
+#Region "Grids"
+        Public Sub makeMidGrid()
+            For i = 0 To 5
+                For j = 0 To 5
+                    midGrid(i, j) = New Label()
+                    With midGrid(i, j)
+                        .Location = New Point(i * 32 + 712, j * 32 + 200 + (32 * 5))
+                        .Width = 30
+                        .Height = 30
+                        .BackColor = Color.Black
+                    End With
+                    Me.Controls.Add(midGrid(i, j))
+                Next j
+            Next i
+        End Sub
+
+        Private Sub labelsClickEvent(sender As Object, e As EventArgs)
+            Me.Text = sender.tag
+
+        End Sub
+
+
+
+        Public Sub makeGrid()
+
+            For i = 0 To MaxColumn
+                For j = 0 To MaxRow
+                    grid(i, j) = New Label()
+                    With grid(i, j)
+                        .Location = New Point(i * 32 + 20, j * 32 + 100)
+                        .Width = 30
+                        .Height = 30
+                        .BackColor = Color.Black
+                        .Tag = i & "," & j
+                    End With
+                    Me.Controls.Add(grid(i, j))
+                    AddHandler grid(i, j).Click, AddressOf labelsClickEvent
+                Next j
+            Next i
+        End Sub
+        Public Sub makeTopGrid()
+            For i = 0 To 5
+                For j = 0 To 5
+                    topGrid(i, j) = New Label()
+                    With topGrid(i, j)
+                        .Location = New Point(i * 32 + 712, j * 32 + 100)
+                        .Width = 30
+                        .Height = 30
+                        .BackColor = Color.Black
+                    End With
+                    Me.Controls.Add(topGrid(i, j))
+                Next j
+            Next i
+        End Sub
+#End Region
+
+        Private Sub Form1_Load(sender As Object, e As EventArgs) Handles MyBase.Load
+            makeGrid()
+            makeTopGrid()
+            makeMidGrid()
+            pickRandomTetro()
+
+        End Sub
+    End Class
+)
             Case 3
                 makeEl(2, 2)
             Case 4
