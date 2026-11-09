@@ -10,6 +10,8 @@ Public Class Form1
     Dim topGrid(5, 5) As Label
     Dim midGrid(5, 5) As Label
     Dim bottomGrid(5, 5) As Label
+    Dim xSpots As New List(Of Integer)
+    Dim ySpots As New List(Of Integer)
 #End Region
 
 #Region "Game Play"
@@ -107,7 +109,29 @@ Public Class Form1
         Dim thisRow As Integer = sender.tag.subString(commaSpot + 1)
         ' Label1.Text = thisRow
         grid(thisColumn, thisRow).BackColor = sender.BackColor
+        Dim thisColor As Color = sender.backColor
+        topGrid(thisColumn, thisRow).BackColor = Color.Black
+        xSpots.Add(thisColumn)
+        ySpots.Add(thisRow)
 
+        For i = 0 To 5
+            For j = thisRow To 5
+                If topGrid(i, j).BackColor = thisColor Then
+                    'We are checking the grid for any square that 
+                    'is the same color as the square we clicked
+                    xSpots.Add(i)
+                    ySpots.Add(j)
+                    topGrid(i, j).BackColor = Color.Black
+                End If
+            Next
+        Next
+        'check what is in each list
+        For Each thisNum In xSpots
+            Label1.Text &= vbCrLf & thisNum
+        Next
+        For Each thisNum In ySpots
+            Label2.Text &= vbCrLf & thisNum
+        Next
     End Sub
     Public Sub makeGrid()
 
@@ -153,6 +177,10 @@ Public Class Form1
         pickRandomTetro(topGrid)
         pickRandomTetro(midGrid)
         pickRandomTetro(bottomGrid)
+
+    End Sub
+
+    Private Sub Label1_Click(sender As Object, e As EventArgs) Handles Label1.Click
 
     End Sub
 End Class
