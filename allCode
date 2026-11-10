@@ -12,6 +12,7 @@ Public Class Form1
     Dim bottomGrid(5, 5) As Label
     Dim xSpots As New List(Of Integer)
     Dim ySpots As New List(Of Integer)
+    Dim haveTetromino As Boolean = False
 #End Region
 
 #Region "Game Play"
@@ -102,7 +103,22 @@ Public Class Form1
             Next j
         Next i
     End Sub
+    Sub placeTetromino(sender As Object, e As EventArgs)
+        Dim commaSpot As Integer = sender.tag.indexOf(",")
+        Dim thisColumn As Integer = sender.tag.subString(0, commaSpot)
+        Dim thisRow As Integer = sender.tag.subString(commaSpot + 1)
+
+        grid(thisColumn, thisRow).BackColor = Color.Green
+        For i = 0 To 2
+            grid(thisColumn + xSpots(i), thisRow + ySpots(i)).BackColor = Color.Green
+        Next
+    End Sub
+
     Private Sub labelsClickEvent(sender As Object, e As EventArgs)
+        If haveTetromino Then
+            placeTetromino(sender, e)
+            Exit Sub
+        End If
         Me.Text = sender.tag
         Dim commaSpot As Integer = sender.tag.indexOf(",")
         Dim thisColumn As Integer = sender.tag.subString(0, commaSpot)
@@ -111,27 +127,20 @@ Public Class Form1
         grid(thisColumn, thisRow).BackColor = sender.BackColor
         Dim thisColor As Color = sender.backColor
         topGrid(thisColumn, thisRow).BackColor = Color.Black
-        xSpots.Add(thisColumn)
-        ySpots.Add(thisRow)
-
+        'xSpots.Add(thisColumn)
+        'ySpots.Add(thisRow)
         For i = 0 To 5
             For j = thisRow To 5
                 If topGrid(i, j).BackColor = thisColor Then
                     'We are checking the grid for any square that 
                     'is the same color as the square we clicked
-                    xSpots.Add(i)
-                    ySpots.Add(j)
+                    xSpots.Add(i - thisColumn)
+                    ySpots.Add(j - thisRow)
                     topGrid(i, j).BackColor = Color.Black
                 End If
             Next
         Next
-        'check what is in each list
-        For Each thisNum In xSpots
-            Label1.Text &= vbCrLf & thisNum
-        Next
-        For Each thisNum In ySpots
-            Label2.Text &= vbCrLf & thisNum
-        Next
+        haveTetromino = True
     End Sub
     Public Sub makeGrid()
 
@@ -180,7 +189,5 @@ Public Class Form1
 
     End Sub
 
-    Private Sub Label1_Click(sender As Object, e As EventArgs) Handles Label1.Click
 
-    End Sub
 End Class
