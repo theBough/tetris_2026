@@ -13,6 +13,7 @@ Public Class Form1
     Dim xSpots As New List(Of Integer)
     Dim ySpots As New List(Of Integer)
     Dim haveTetromino As Boolean = False
+    Dim thisColor As Color
 #End Region
 
 #Region "Game Play"
@@ -108,10 +109,11 @@ Public Class Form1
         Dim thisColumn As Integer = sender.tag.subString(0, commaSpot)
         Dim thisRow As Integer = sender.tag.subString(commaSpot + 1)
 
-        grid(thisColumn, thisRow).BackColor = Color.Green
+        grid(thisColumn, thisRow).BackColor = thisColor
         For i = 0 To 2
-            grid(thisColumn + xSpots(i), thisRow + ySpots(i)).BackColor = Color.Green
+            grid(thisColumn + xSpots(i), thisRow + ySpots(i)).BackColor = thisColor
         Next
+        haveTetromino = False
     End Sub
 
     Private Sub labelsClickEvent(sender As Object, e As EventArgs)
@@ -119,13 +121,14 @@ Public Class Form1
             placeTetromino(sender, e)
             Exit Sub
         End If
+
         Me.Text = sender.tag
         Dim commaSpot As Integer = sender.tag.indexOf(",")
         Dim thisColumn As Integer = sender.tag.subString(0, commaSpot)
         Dim thisRow As Integer = sender.tag.subString(commaSpot + 1)
         ' Label1.Text = thisRow
-        grid(thisColumn, thisRow).BackColor = sender.BackColor
-        Dim thisColor As Color = sender.backColor
+        thisColor = sender.backColor
+
         topGrid(thisColumn, thisRow).BackColor = Color.Black
         'xSpots.Add(thisColumn)
         'ySpots.Add(thisRow)
@@ -169,6 +172,7 @@ Public Class Form1
                     .Height = 30
                     .BackColor = Color.Black
                     .Tag = i & "," & j
+                    .Name = "topGrid"
                 End With
                 Me.Controls.Add(topGrid(i, j))
                 AddHandler topGrid(i, j).Click, AddressOf labelsClickEvent
