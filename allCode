@@ -85,9 +85,11 @@ Public Class Form1
                     .Width = 30
                     .Height = 30
                     .BackColor = Color.Black
+                    .Tag = i & "," & j
                     .Name = "bottomGrid"
                 End With
                 Me.Controls.Add(bottomGrid(i, j))
+                AddHandler bottomGrid(i, j).Click, AddressOf labelsClickEvent
             Next j
         Next i
     End Sub
@@ -100,9 +102,11 @@ Public Class Form1
                     .Width = 30
                     .Height = 30
                     .BackColor = Color.Black
+                    .Tag = i & "," & j
                     .Name = "midGrid"
                 End With
                 Me.Controls.Add(midGrid(i, j))
+                AddHandler midGrid(i, j).Click, AddressOf labelsClickEvent
             Next j
         Next i
     End Sub
@@ -159,6 +163,7 @@ Public Class Form1
         Next
     End Sub
     Private Sub labelsClickEvent(sender As Object, e As EventArgs)
+        Me.Text = sender.name
         If haveTetromino Then
             placeTetromino(sender, e)
             'Exit Sub
@@ -167,9 +172,10 @@ Public Class Form1
             If (sender.Name = "topGrid") Then
                 grabTetromino(sender, topGrid)
             ElseIf (sender.Name = "midGrid") Then
+                Me.Text = "IN the mid"
                 grabTetromino(sender, midGrid)
             ElseIf (sender.Name = "bottomGrid") Then
-                grabTetromino(sender, midGrid)
+                grabTetromino(sender, bottomGrid)
             End If
 
         End If
