@@ -14,9 +14,20 @@ Public Class Form1
     Dim ySpots As New List(Of Integer)
     Dim haveTetromino As Boolean = False
     Dim thisColor As Color
+    Dim placedTetromino As Integer = 0
 #End Region
 
 #Region "Game Play"
+    Sub timeForThreeNew()
+        placedTetromino += 1
+        If placedTetromino > 2 Then
+            'spawn 3 new tetromino
+            pickRandomTetro(topGrid)
+            pickRandomTetro(midGrid)
+            pickRandomTetro(bottomGrid)
+            placedTetromino = 0
+        End If
+    End Sub
     Sub pickRandomTetro(ByVal thisGrid As Label(,))
         Dim rando As New Random
 
@@ -34,6 +45,41 @@ Public Class Form1
             Case 5
                 makeCube(2, 2, thisGrid)
         End Select
+    End Sub
+    Sub placeTetromino(sender As Object, e As EventArgs)
+        Dim commaSpot As Integer = sender.tag.indexOf(",")
+        Dim thisColumn As Integer = sender.tag.subString(0, commaSpot)
+        Dim thisRow As Integer = sender.tag.subString(commaSpot + 1)
+
+        grid(thisColumn, thisRow).BackColor = thisColor
+        For i = 0 To 2
+            grid(thisColumn + xSpots(i), thisRow + ySpots(i)).BackColor = thisColor
+        Next
+        haveTetromino = False
+        timeForThreeNew()
+    End Sub
+    Sub grabTetromino(sender As Object, thisArray As Label(,))
+
+        Dim commaSpot As Integer = sender.tag.indexOf(",")
+        Dim thisColumn As Integer = sender.tag.subString(0, commaSpot)
+        Dim thisRow As Integer = sender.tag.subString(commaSpot + 1)
+        thisColor = sender.backColor
+        thisArray(thisColumn, thisRow).BackColor = Color.Black
+        xSpots.Clear()
+        ySpots.Clear()
+
+
+        For i = 0 To 5
+            For j = thisRow To 5
+                If thisArray(i, j).BackColor = thisColor Then
+                    'We are checking the grid for any square that 
+                    'is the same color as the square we clicked
+                    xSpots.Add(i - thisColumn)
+                    ySpots.Add(j - thisRow)
+                    thisArray(i, j).BackColor = Color.Black
+                End If
+            Next
+        Next
     End Sub
 #End Region
 
@@ -127,41 +173,6 @@ Public Class Form1
             Next j
         Next i
     End Sub
-
-    Sub placeTetromino(sender As Object, e As EventArgs)
-        Dim commaSpot As Integer = sender.tag.indexOf(",")
-        Dim thisColumn As Integer = sender.tag.subString(0, commaSpot)
-        Dim thisRow As Integer = sender.tag.subString(commaSpot + 1)
-
-        grid(thisColumn, thisRow).BackColor = thisColor
-        For i = 0 To 2
-            grid(thisColumn + xSpots(i), thisRow + ySpots(i)).BackColor = thisColor
-        Next
-        haveTetromino = False
-    End Sub
-    Sub grabTetromino(sender As Object, thisArray As Label(,))
-
-        Dim commaSpot As Integer = sender.tag.indexOf(",")
-        Dim thisColumn As Integer = sender.tag.subString(0, commaSpot)
-        Dim thisRow As Integer = sender.tag.subString(commaSpot + 1)
-        ' Label1.Text = thisRow
-        thisColor = sender.backColor
-
-        thisArray(thisColumn, thisRow).BackColor = Color.Black
-        'xSpots.Add(thisColumn)
-        'ySpots.Add(thisRow)
-        For i = 0 To 5
-            For j = thisRow To 5
-                If thisArray(i, j).BackColor = thisColor Then
-                    'We are checking the grid for any square that 
-                    'is the same color as the square we clicked
-                    xSpots.Add(i - thisColumn)
-                    ySpots.Add(j - thisRow)
-                    thisArray(i, j).BackColor = Color.Black
-                End If
-            Next
-        Next
-    End Sub
     Private Sub labelsClickEvent(sender As Object, e As EventArgs)
         Me.Text = sender.name
         If haveTetromino Then
@@ -182,7 +193,6 @@ Public Class Form1
 
         haveTetromino = True
     End Sub
-
     Public Sub makeGrid()
 
         For i = 0 To MaxColumn
@@ -200,7 +210,6 @@ Public Class Form1
             Next j
         Next i
     End Sub
-
 #End Region
 
     Private Sub Form1_Load(sender As Object, e As EventArgs) Handles MyBase.Load
