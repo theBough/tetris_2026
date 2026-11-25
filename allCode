@@ -13,11 +13,19 @@ Public Class Form1
     Dim xSpots As New List(Of Integer)
     Dim ySpots As New List(Of Integer)
     Dim haveTetromino As Boolean = False
-    Dim thisColor As Color
+    Dim thisColor As Color = Color.Yellow
     Dim placedTetromino As Integer = 0
 #End Region
 
 #Region "Game Play"
+    Function checkRow(thisRow As Integer)
+        For i = 0 To MaxColumn
+            If grid(thisRow, i).BackColor = Color.Black Then
+                Return False
+            End If
+        Next
+        Return True
+    End Function
     Sub timeForThreeNew()
         placedTetromino += 1
         If placedTetromino > 2 Then
@@ -70,7 +78,7 @@ Public Class Form1
 
 
         For i = 0 To 5
-            For j = thisRow To 5
+            For j = 0 To 5
                 If thisArray(i, j).BackColor = thisColor Then
                     'We are checking the grid for any square that 
                     'is the same color as the square we clicked
@@ -173,6 +181,42 @@ Public Class Form1
             Next j
         Next i
     End Sub
+    Private Sub labelsEnterEvent(sender As Object, e As EventArgs)
+
+        If (sender.backColor = Color.Black) And sender.Name = "grid" And haveTetromino Then
+            sender.backColor = thisColor
+            Dim commaSpot As Integer = sender.tag.indexOf(",")
+            Dim thisColumn As Integer = sender.tag.subString(0, commaSpot)
+            Dim thisRow As Integer = sender.tag.subString(commaSpot + 1)
+            For i = 0 To 2
+                If thisColumn + xSpots(i) < 0 Or
+                   thisColumn + xSpots(i) > 19 Or
+                   thisRow + ySpots(i) < 0 Or
+                   thisRow + ySpots(i) > 19 Then
+                    Exit For
+                End If
+                grid(thisColumn + xSpots(i), thisRow + ySpots(i)).BackColor = thisColor
+            Next
+
+        End If
+    End Sub
+    Private Sub labelsLeaveEvent(sender As Object, e As EventArgs)
+        If (sender.backColor = thisColor) And sender.Name = "grid" And haveTetromino Then
+            sender.backColor = Color.Black
+            Dim commaSpot As Integer = sender.tag.indexOf(",")
+            Dim thisColumn As Integer = sender.tag.subString(0, commaSpot)
+            Dim thisRow As Integer = sender.tag.subString(commaSpot + 1)
+            For i = 0 To 2
+                If thisColumn + xSpots(i) < 0 Or
+                   thisColumn + xSpots(i) > 19 Or
+                   thisRow + ySpots(i) < 0 Or
+                   thisRow + ySpots(i) > 19 Then
+                    Exit For
+                End If
+                grid(thisColumn + xSpots(i), thisRow + ySpots(i)).BackColor = Color.Black
+            Next
+        End If
+    End Sub
     Private Sub labelsClickEvent(sender As Object, e As EventArgs)
         Me.Text = sender.name
         If haveTetromino Then
@@ -204,9 +248,12 @@ Public Class Form1
                     .Height = 30
                     .BackColor = Color.Black
                     .Tag = i & "," & j
+                    .Name = "grid"
                 End With
                 Me.Controls.Add(grid(i, j))
                 AddHandler grid(i, j).Click, AddressOf labelsClickEvent
+                AddHandler grid(i, j).MouseEnter, AddressOf labelsEnterEvent
+                AddHandler grid(i, j).MouseLeave, AddressOf labelsLeaveEvent
             Next j
         Next i
     End Sub
